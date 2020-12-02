@@ -1,3 +1,6 @@
+from __future__ import annotations
+from typing import List
+
 
 class Node:
 
@@ -8,7 +11,16 @@ class Node:
         self.child = list()
         self.parent = None
 
-    def __str__(self):
-        return "[name: {}, level: {}, color: {}, parent: {}, childern: {}]".format(
-            self.num, self.level, self.color, self.parent.num if self.parent else "None", ' '.join([str(x.num) for x in self.child]) )
+        self.color_options = set()
 
+    def set_color_options(self, colors: List):
+        self.color_options = set().union(colors)
+
+    def __str__(self):
+        return "Node: {}, Color: {}".format(self.num, self.color)
+
+    def __eq__(self, other: Node):
+        return self.num == other.num
+
+    def __hash__(self):
+        hash(self.num)
