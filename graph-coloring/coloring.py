@@ -11,9 +11,6 @@ class Coloring:
         self.node_count = 0
         self.number_of_solution = 0
 
-    def get_next_color(self, color: int):
-        return self.colors[(color + 1) % len(self.colors)]
-
     def show_path(self, node: Node):
         tmp_node = node
         stack = list()
@@ -43,7 +40,7 @@ class Coloring:
             for child_node in node.child:
                 expanded_queue.append(child_node)
 
-            if len(node.child) == 0:
+            if len(node.child) == 0 and node.level == len(self.matrix):
                 self.number_of_solution += 1
                 self.show_path(node)
 
@@ -77,11 +74,10 @@ if __name__ == '__main__':
         [1, 0, 0, 1, 0],
 
     ]
-    colors = ['R', 'G','B']
+    colors = ['RED', 'GREEN', 'BLUE']
     coloring = Coloring(matrix, colors)
     head = Node(0)
 
-    # coloring.show(head)
     coloring.m_coloring(head)
     coloring.show_solutions(head)
     print("Total solutions: {}".format(coloring.number_of_solution))
